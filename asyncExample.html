@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example | Authorization </title>
+    <script src="node_modules/axios/dist/axios.min.js"></script>
+    
+    
+</head>
+<body>
+    <h2> Hello World! </h2>
+</body>
+    <script>
+
+        // to do register user in code , you needed to do login then create this user !
+
+        axios.post('https://reqres.in/api/login', {
+        
+            "email": "charles.morris@reqres.in",
+            "password": "pistol"
+        
+        }).then(function (response) {
+            let tokenInfo = response.data.token;
+            
+            localStorage.setItem("token",tokenInfo)
+            createUser()
+        })
+
+        function createUser(){
+            let getToken = localStorage.getItem("token");
+            let configuration = {
+                headers : {
+                    "Authorization":`Bearer ${getToken}`
+                }
+            }
+
+            axios.post('https://reqres.in/api/users', {
+        
+                "email": "seahmednail@gmail.com",
+                "password": "ascll7878"
+    
+            },configuration)
+            .then(function (response) {
+                console.log(response);
+            })
+        }
+
+    </script>
+</html>
